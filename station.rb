@@ -1,4 +1,5 @@
 class Station
+  attr_reader :title
   def initialize(title)
     @title = title
     @trains = []
@@ -12,22 +13,23 @@ class Station
     puts @trains
   end
 
-  def kol_show
-    kp=0
-    kg=0
-    for i in 1..@trains.length-1
-      if @trains[i].type == "p"
-        kp=kp+1
-        puts "Kolichestvo passagirsk #{kp}"
-      else
-        kg=kg+1
-        puts "kolichestvo grus #{kg}"
+  def trains_by(type)
+    type_train=[]
+    @trains.each_with_index do |train, index|
+      if train.type==type
+        type_train<<train
       end
     end
   end
 
+  def count_trains_by(type)
+    return trains_by(type).length
+  end
+
+
+
   def send(train)
-    @trains.number.delete(train.number)
+    @trains.delete(train)
 
     end
 end
