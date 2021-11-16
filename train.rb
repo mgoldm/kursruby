@@ -31,7 +31,6 @@ class Train
   end
 
   def movement_forward
-
     return unless next_station
 
     @current_station = next_station
@@ -39,34 +38,22 @@ class Train
   end
 
   def movement_backward
-    k = @route.list_stations.length
-    if @current_station == @route.list_stations[k - 1]
-      @current_station = previous_station
-    elsif @current_station == @route.list_stations[0]
-      puts 'Start of the way'
-    else
-      @current_station = previous_station
-    end
+    return unless previous_station
+
+    @current_station = previous_station
   end
 
   def next_station
-    index = @route.list_stations.index @current_station
-    last_index=@route.list_stations.length
-    if @route.list_stations[index]==@route.list_stations[last_index]
-      nil
-    else
-      next_st = @route.list_stations[index + 1]
-      next_st
-    end
+    index = @route.list_stations.index(@current_station)
+    next_st = @route.list_stations[index + 1] if @route.list_stations.last != @current_station
+    next_st
+
   end
 
   def previous_station
-    index = @route.list_stations.index @current_station
-    if @route.list_stations[index]==@route.list_stations[0]
-      nil
-    else
-      previous_st = @route.list_stations[index - 1]
-      previous_st
-    end
+    index = @route.list_stations.index(@current_station)
+    previous_station = @route.list_stations[index - 1] if @route.list_stations.first != @current_station
+    previous_station
+
   end
 end
