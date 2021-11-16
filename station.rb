@@ -14,16 +14,11 @@ class Station
   end
 
   def trains_by(type)
-    type_train=[]
-    @trains.each_with_index do |train, index|
-      if train.type==type
-        type_train<<train
-      end
-    end
+    @trains.filter { |train| train.type == type }
   end
 
   def count_trains_by(type)
-    return trains_by(type).length
+    trains_by(type).length
   end
 
 
