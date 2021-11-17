@@ -2,27 +2,15 @@ class Train
   attr_accessor :speed
   attr_reader :wagons, :route, :current_station, :number, :type
 
-  def initialize(number, type, wagons, speed = 0)
+  def initialize(number, type, speed = 0, wagons=[])
     @number = number
     @type = type
-    @wagons = wagons
     @speed = speed
+    @wagons = wagons
   end
 
   def stop
     @speed = 0
-  end
-
-  def plus
-    if @speed == 0
-      @wagons = @wagons + 1
-    end
-  end
-
-  def minus
-    if @speed == 0
-      @wagons = @wagons - 1
-    end
   end
 
   def add_route(route)
@@ -54,6 +42,30 @@ class Train
     index = @route.list_stations.index(@current_station)
     previous_station = @route.list_stations[index - 1] if @route.list_stations.first != @current_station
     previous_station
+    end
+
+  def plus_wagon(wagon)
+    @wagons << wagon
+    @wagons
+  end
+
+  def minus_wagon(wagon)
+    @wagons.delete(wagon)
+    @wagons
+  end
+
+  #эти два метода не могу быть использованы в других классах классах
+  private
+  def plus
+    if @speed == 0
+      @wagons = @wagons + 1
+    end
+  end
+  def minus
+    if @speed == 0
+      @wagons = @wagons - 1
+    end
+  end
 
   end
-end
+
