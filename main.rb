@@ -149,11 +149,11 @@ TEXT
     puts @trains[num].type
     if @trains[num].type == "g"
       puts "Этот поезд - грузовой, будет добавлен грузовой вагон"
-      wagon = CargoWagon.new("g")
+      wagon = CargoWagon.new()
       @trains[num].plus_wagon(wagon)
     elsif @trains[num].type == "p"
       puts "Этот поезд - пассажирский, будет добавлен пассажирский вагон"
-      wagon = PassengerWagon.new("p")
+      wagon = PassengerWagon.new()
       @trains[num].plus_wagon(wagon)
     else
       puts "Такого поезда нет"
