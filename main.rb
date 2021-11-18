@@ -189,7 +189,6 @@ TEXT
     puts "На станции #{all_stations[num_st].title} находятся поезда: "
     @stations[num_st].trains.each_with_index{ |num, n| puts "#{n} #{num.number}" }
   end
-
 end
 
 controller = Controller.new
