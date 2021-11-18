@@ -2,11 +2,11 @@ class Train
   attr_accessor :speed
   attr_reader :wagons, :route, :current_station, :number, :type
 
-  def initialize(number, type, speed = 0, wagons=[])
+  def initialize(number,type,  speed = 0)
     @number = number
-    @type = type
     @speed = speed
-    @wagons = wagons
+    @type = type
+    @wagons = []
   end
 
   def stop
@@ -42,19 +42,21 @@ class Train
     index = @route.list_stations.index(@current_station)
     previous_station = @route.list_stations[index - 1] if @route.list_stations.first != @current_station
     previous_station
-    end
-
-  def plus_wagon(wagon)
-    @wagons << wagon
-    @wagons
   end
 
   def minus_wagon(wagon)
     @wagons.delete(wagon)
     @wagons
   end
+  #используем протектед  для того, чтобы проверять, каким является вагон
+  protected
+  def plus_wagon(wagon)
+    @wagons << wagon
+    @wagons
+  end
 
-  #эти два метода не могу быть использованы в других классах классах
+
+  #эти два метода не могу быть использованы в других классах
   private
   def plus
     if @speed == 0
