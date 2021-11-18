@@ -53,6 +53,8 @@ class Train
     if @type==wagon.type
     @wagons << wagon
     @wagons
+    else
+      puts 'Тип вагона и поезда не совпадает'
     end
   end
 
@@ -61,8 +63,7 @@ class Train
   def plus
     if @speed == 0
       @wagons = @wagons + 1
-    else
-      puts 'Тип вагона и поезда не совпадает'
+
     end
   end
   def minus

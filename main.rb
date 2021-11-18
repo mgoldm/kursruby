@@ -2,9 +2,11 @@ require_relative 'train'
 require_relative 'passenger'
 require_relative 'route'
 require_relative 'station'
+require_relative 'wagon'
 require_relative 'cargowagon'
 require_relative 'cargo'
 require_relative 'PassengerWagon'
+
 
 class Controller
 
@@ -12,6 +14,7 @@ class Controller
     @stations = []
     @trains = []
     @routes = []
+
   end
 
   def menu
