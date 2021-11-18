@@ -50,16 +50,19 @@ class Train
   end
 
   def plus_wagon(wagon)
+    if @type==wagon.type
     @wagons << wagon
     @wagons
+    end
   end
-
 
   #эти два метода не могу быть использованы в других классах
   private
   def plus
     if @speed == 0
       @wagons = @wagons + 1
+    else
+      puts 'Тип вагона и поезда не совпадает'
     end
   end
   def minus

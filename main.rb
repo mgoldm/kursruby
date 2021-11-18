@@ -148,7 +148,7 @@ TEXT
     num = gets.chomp.to_i
     puts @trains[num].type
     if @trains[num].type == "g"
-      #puts "Этот поезд - грузовой, будет добавлен грузовой вагон"
+      puts "Этот поезд - грузовой, будет добавлен грузовой вагон"
       wagon = CargoWagon.new("g")
       @trains[num].plus_wagon(wagon)
     elsif @trains[num].type == "p"
