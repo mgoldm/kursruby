@@ -48,8 +48,7 @@ class Train
     @wagons.delete(wagon)
     @wagons
   end
-  #используем протектед  для того, чтобы проверять, каким является вагон
-  protected
+
   def plus_wagon(wagon)
     @wagons << wagon
     @wagons

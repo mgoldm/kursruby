@@ -68,7 +68,7 @@ TEXT
       list_trains_on_station
     end
   end
-
+  private
   def new_stations
     puts 'Введите название станции'
     name_station = gets.chomp
@@ -148,13 +148,13 @@ TEXT
     num = gets.chomp.to_i
     puts @trains[num].type
     if @trains[num].type == "g"
-      puts "Этот поезд - грузовой, будет добавлен грузовой вагон"
+      #puts "Этот поезд - грузовой, будет добавлен грузовой вагон"
       wagon = CargoWagon.new("g")
-      @trains[num].wagons.push(wagon)
+      @trains[num].plus_wagon(wagon)
     elsif @trains[num].type == "p"
       puts "Этот поезд - пассажирский, будет добавлен пассажирский вагон"
       wagon = PassengerWagon.new("p")
-      @trains[num].wagons.push(wagon)
+      @trains[num].plus_wagon(wagon)
     else
       puts "Такого поезда нет"
     end
