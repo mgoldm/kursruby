@@ -7,7 +7,6 @@ require_relative 'cargowagon'
 require_relative 'cargo'
 require_relative 'PassengerWagon'
 
-
 class Controller
 
   def initialize
@@ -71,7 +70,9 @@ TEXT
       list_trains_on_station
     end
   end
+
   private
+
   def new_stations
     puts 'Введите название станции'
     name_station = gets.chomp
@@ -166,7 +167,7 @@ TEXT
   def delete_wagon
     puts 'Укажите индекс поезда'
     all_trains
-    num=gets.chomp.to_i
+    num = gets.chomp.to_i
     @trains[num].wagons.delete(num)
     puts 'Вагон был отцеплен'
   end
@@ -180,8 +181,8 @@ TEXT
     all_trains
     num_tr = gets.chomp.to_i
     @stations[num_st].train_on_station(@trains[num_tr])
-    @stations[num_st-1].send(@trains[num_tr])
-    @stations[num_st+1].send(@trains[num_tr])
+    @stations[num_st - 1].send(@trains[num_tr])
+    @stations[num_st + 1].send(@trains[num_tr])
     puts "На станцию #{@stations[num_st].title} Прибыл поезд #{@trains[num_tr].number}"
   end
 
@@ -190,7 +191,7 @@ TEXT
     all_stations
     num_st = gets.chomp.to_i
     puts "На станции #{all_stations[num_st].title} находятся поезда: "
-    @stations[num_st].trains.each_with_index{ |num, n| puts "#{n} #{num.number}" }
+    @stations[num_st].trains.each_with_index { |num, n| puts "#{n} #{num.number}" }
   end
 end
 

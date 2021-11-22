@@ -1,6 +1,7 @@
 class Station
-  attr_reader :title , :trains
+  attr_reader :title, :trains
   include InstanceCounter
+
   def initialize(title)
     register_instence
     @title = title
@@ -23,10 +24,8 @@ class Station
     trains_by(type).length
   end
 
-
-
   def send(train)
     @trains.delete(train)
 
-    end
+  end
 end
