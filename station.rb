@@ -1,6 +1,8 @@
 class Station
   attr_reader :title , :trains
+  include InstanceCounter
   def initialize(title)
+    register_instence
     @title = title
     @trains = []
   end
