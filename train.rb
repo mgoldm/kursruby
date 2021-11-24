@@ -36,7 +36,25 @@ class Train
     @type = type
     @wagons = []
     @@instance_collector << self
+    validate!
 
+  end
+
+  FORMAT_NUMBER = /\w{3}-?\w{2}$/
+
+  def validate!
+    raise "Number can't be empty" if number.empty?
+    raise "Type should be at least 1 symbol" if type.length != 1
+    raise "Type should be p or g" if @type != 'g' and @type != 'p'
+    raise "Number gas invalid format" if number !~ FORMAT_NUMBER
+    true
+  end
+
+  def valid?
+    validate!
+    true
+  rescue
+    false
   end
 
   def stop
@@ -84,7 +102,7 @@ class Train
       @wagons << wagon
       @wagons
     else
-      puts 'Тип вагона и поезда не совпадает'
+      return 'Тип вагона и поезда не совпадает'
     end
   end
 

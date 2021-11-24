@@ -1,3 +1,5 @@
+require_relative 'manufactory'
+require_relative 'instanceCounter'
 require_relative 'train'
 require_relative 'passenger'
 require_relative 'route'
@@ -73,11 +75,24 @@ TEXT
 
   private
 
+  FORMAT_NUMBER = /\w{3}-?\w{2}$/
+
+  def validate!(numb, type)
+    raise "number of train can't be empty" if numb.empty?
+    raise "Type should be at least 1 symbol" if type.length != 1
+    raise "Type should be p or g" if type != 'g' and type != 'p'
+    raise "Number gas invalid format" if numb !~ FORMAT_NUMBER
+    true
+  rescue
+    puts "Ошибка ввода данных, внимательно введите значения"
+    new_train
+  end
+
   def new_stations
-    puts 'Введите название станции'
+    puts 'Введите название станции в формате.Например 1x1-22'
     name_station = gets.chomp
     @stations.push(Station.new(name_station))
-    return name_station
+    name_station
   end
 
   def new_train
@@ -85,12 +100,13 @@ TEXT
     number = gets.chomp
     puts 'Укажите тип поезда: грузовой- g, пассажирский-p'
     type = gets.chomp
+    validate!(number, type)
     if type == 'p'
       @trains.push(PassengerTrain.new(number, type))
+      puts "Создан пассажирский поезд #{number}"
     elsif type == 'g'
       @trains.push(CargoTrain.new(number, type))
-    else
-      puts 'Такого типа поездов нет'
+      puts "Создан грузовой поезд #{number}"
     end
   end
 
