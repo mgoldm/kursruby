@@ -3,7 +3,7 @@ class Station
   include InstanceCounter
 
   def initialize(title)
-    register_instence
+    register_instance
     @title = title
     @trains = []
   end
@@ -26,6 +26,11 @@ class Station
 
   def send(train)
     @trains.delete(train)
-
   end
+
+  def each_train
+    trains.each { |train| yield(train) } if block_given?
+  end
+
 end
+

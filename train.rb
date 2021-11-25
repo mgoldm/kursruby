@@ -97,6 +97,10 @@ class Train
     end
   end
 
+  def each_wagon
+    wagons.each { |wagon| yield(wagon) } if block_given?
+  end
+
   #эти два метода не могу быть использованы в других классах
 
   private

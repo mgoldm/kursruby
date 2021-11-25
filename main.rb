@@ -32,6 +32,8 @@ class Controller
     - Перемещать поезд по маршруту 9
     - Просматривать список станций 10
     - Cписок поездов на станции 11
+    - Список вагонов у поезда 12
+    - Занять место в вагоне 13
 
 TEXT
     puts list
@@ -70,18 +72,19 @@ TEXT
       all_stations
     when "11"
       list_trains_on_station
+    when "12"
+      wagon_list
+    when "13"
+      load
     end
   end
 
   private
 
-  #FORMAT_NUMBER = /\w{3}-?\w{2}$/
-
   def validate!(numb, type)
     raise "number of train can't be empty" if numb.empty?
     raise "Type should be at least 1 symbol" if type.length != 1
     raise "Type should be p or g" if type != 'g' and type != 'p'
-    raise "Number gas invalid format" if numb !~ FORMAT_NUMBER
     true
   rescue
     puts "Ошибка ввода данных, внимательно введите значения"
@@ -89,14 +92,14 @@ TEXT
   end
 
   def new_stations
-    puts 'Введите название станции в формате.Например 1x1-22'
+    puts 'Введите название станции'
     name_station = gets.chomp
     @stations.push(Station.new(name_station))
     name_station
   end
 
   def new_train
-    puts 'Укажите номер поезда'
+    puts 'Введите номер поезда в формате.Например 1x1-22'
     number = gets.chomp
     puts 'Укажите тип поезда: грузовой- g, пассажирский-p'
     type = gets.chomp
@@ -160,6 +163,9 @@ TEXT
     all_trains
     number = gets.chomp
     @trains[number.to_i].add_route(@routes[i.to_i])
+    first = @routes[i.to_i].list_stations
+    first[0].train_on_station(@trains[number.to_i])
+    puts "маршрут успешно назначен. Поезд на станции #{first[0].title}"
   end
 
   def add_wagon
@@ -169,11 +175,15 @@ TEXT
     puts @trains[num].type
     if @trains[num].type == "g"
       puts "Этот поезд - грузовой, будет добавлен грузовой вагон"
-      wagon = CargoWagon.new()
+      puts 'Укажите мааксимальынй вес вагона'
+      size = gets.chomp.to_i
+      wagon = CargoWagon.new(size)
       @trains[num].plus_wagon(wagon)
     elsif @trains[num].type == "p"
       puts "Этот поезд - пассажирский, будет добавлен пассажирский вагон"
-      wagon = PassengerWagon.new()
+      puts 'Укажите количество сидений в вагоне'
+      places = gets.chomp.to_i
+      wagon = PassengerWagon.new(places)
       @trains[num].plus_wagon(wagon)
     else
       puts "Такого поезда нет"
@@ -207,7 +217,34 @@ TEXT
     all_stations
     num_st = gets.chomp.to_i
     puts "На станции #{all_stations[num_st].title} находятся поезда: "
-    @stations[num_st].trains.each_with_index { |num, n| puts "#{n} #{num.number}" }
+    @stations[num_st].each_train { |train| puts train }
+  end
+
+  def wagon_list
+    puts "Выберите поезд"
+    all_trains
+    num = gets.chomp.to_i
+    puts "у поезда #{all_trains[num].number} есть вагоны:"
+    @trains[num].each_wagon { |wagon| puts num, wagon }
+  end
+
+  def load
+    puts 'выберете номер поезда'
+    all_trains
+    number_of_train = gets.chomp.to_i
+    puts 'выберете номер вагона'
+    @trains[number_of_train].each_wagon { |wagon| puts number_of_train, wagon }
+    train = @trains[number_of_train].wagons
+    number_of_wagon = gets.chomp.to_i
+    if train[number_of_wagon].type == 'g'
+      puts "Введите вес груза"
+      weight = gets.chomp.to_i
+      train[number_of_wagon].loading(weight)
+      puts "В вагоне осталось #{train[number_of_wagon].freesize}"
+    elsif train[number_of_wagon].type == 'p'
+      train[number_of_wagon].loading
+      puts "В вагоне осталось #{train[number_of_wagon].vacant_places} свободных мест"
+    end
   end
 end
 
