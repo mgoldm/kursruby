@@ -75,7 +75,7 @@ TEXT
 
   private
 
-  FORMAT_NUMBER = /\w{3}-?\w{2}$/
+  #FORMAT_NUMBER = /\w{3}-?\w{2}$/
 
   def validate!(numb, type)
     raise "number of train can't be empty" if numb.empty?

@@ -21,7 +21,7 @@ class Train
         if train.number == number_of_train
           train
         else
-          return 'Такого поезда нет'
+          puts 'Такого поезда нет'
         end
       end
 
@@ -35,20 +35,11 @@ class Train
     @speed = speed
     @type = type
     @wagons = []
-    @@instance_collector << self
     validate!
-
+    @@instance_collector << self
   end
 
   FORMAT_NUMBER = /\w{3}-?\w{2}$/
-
-  def validate!
-    raise "Number can't be empty" if number.empty?
-    raise "Type should be at least 1 symbol" if type.length != 1
-    raise "Type should be p or g" if @type != 'g' and @type != 'p'
-    raise "Number gas invalid format" if number !~ FORMAT_NUMBER
-    true
-  end
 
   def valid?
     validate!
@@ -102,13 +93,21 @@ class Train
       @wagons << wagon
       @wagons
     else
-      return 'Тип вагона и поезда не совпадает'
+      puts 'Тип вагона и поезда не совпадает'
     end
   end
 
   #эти два метода не могу быть использованы в других классах
 
   private
+
+  def validate!
+    raise "Number can't be empty" if number.empty?
+    raise "Type should be at least 1 symbol" if type.length != 1
+    raise "Type should be p or g" if @type != 'g' and @type != 'p'
+    raise "Number gas invalid format" if number !~ FORMAT_NUMBER
+    true
+  end
 
   def plus
     if @speed == 0
