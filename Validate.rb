@@ -34,7 +34,7 @@ module Validate
     private
 
     def valid_presence(value)
-      raise "Value can't be nill or empty" if value.nil? || value.strip.empty?
+      raise "Value can't be nill or empty" if value.nil? || value.empty?
     end
 
     def valid_format(value, format)
