@@ -7,7 +7,7 @@ class Train
   attr_reader :wagons, :route, :current_station, :number, :type
   @@instance_collector = []
   validate :number, :presence
-  validate :number, :format, :"#{/\w{3}-?\w{2}$/}"
+  validate :number, :format, "#{/\w{3}-?\w{2}$/}"
 
   class << self
     #метод класса для отображения всех объектов
