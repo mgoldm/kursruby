@@ -1,11 +1,14 @@
 class Station
   attr_reader :title, :trains
   include InstanceCounter
+  include Validate
+  validate :title, :type, Station
 
   def initialize(title)
     register_instance
     @title = title
     @trains = []
+    validate!
   end
 
   def train_on_station(train)
@@ -24,7 +27,7 @@ class Station
     trains_by(type).length
   end
 
-  def send(train)
+  def send_from_station(train)
     @trains.delete(train)
   end
 

@@ -1,10 +1,13 @@
 class Train
-  attr_accessor :speed
-  attr_reader :wagons, :route, :current_station, :number, :type
   include Manufacturer
   include InstanceCounter
-
+  include Accessors
+  include Validate
+  accessors_with_history :speed
+  attr_reader :wagons, :route, :current_station, :number, :type
   @@instance_collector = []
+  validate :number, :presence
+  validate :number, :format, :"#{/\w{3}-?\w{2}$/}"
 
   class << self
     #метод класса для отображения всех объектов
@@ -24,9 +27,7 @@ class Train
           puts 'Такого поезда нет'
         end
       end
-
     end
-
   end
 
   def initialize(number, type, speed = 0)
@@ -40,13 +41,6 @@ class Train
   end
 
   FORMAT_NUMBER = /\w{3}-?\w{2}$/
-
-  def valid?
-    validate!
-    true
-  rescue
-    false
-  end
 
   def stop
     @speed = 0
@@ -104,14 +98,6 @@ class Train
   #эти два метода не могу быть использованы в других классах
 
   private
-
-  def validate!
-    raise "Number can't be empty" if number.empty?
-    raise "Type should be at least 1 symbol" if type.length != 1
-    raise "Type should be p or g" if @type != 'g' and @type != 'p'
-    raise "Number gas invalid format" if number !~ FORMAT_NUMBER
-    true
-  end
 
   def plus
     if @speed == 0
