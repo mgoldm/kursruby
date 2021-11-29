@@ -3,11 +3,12 @@ class Train
   include InstanceCounter
   include Accessors
   include Validate
+  FORMAT_NUMBER = /\w{3}-?\w{2}$/
   accessors_with_history :speed
   attr_reader :wagons, :route, :current_station, :number, :type
   @@instance_collector = []
   validate :number, :presence
-  validate :number, :format, "#{/\w{3}-?\w{2}$/}"
+  validate :number, :format, FORMAT_NUMBER
 
   class << self
     #метод класса для отображения всех объектов
@@ -39,8 +40,6 @@ class Train
     validate!
     @@instance_collector << self
   end
-
-  FORMAT_NUMBER = /\w{3}-?\w{2}$/
 
   def stop
     @speed = 0

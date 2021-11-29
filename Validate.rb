@@ -32,13 +32,13 @@ module Validate
     end
 
     private
-    FORMAT_NUMBER = /\w{3}-?\w{2}$/
+
     def valid_presence(value)
       raise "Value can't be nill or empty" if value.nil? || value.strip.empty?
     end
 
-    def valid_format(value)
-      raise "invalid format of value" if value.nil? || value !~ FORMAT_NUMBER
+    def valid_format(value, format)
+      raise "invalid format of value" if value.nil? || value !~ format
     end
 
     def valid_type(value, type)
